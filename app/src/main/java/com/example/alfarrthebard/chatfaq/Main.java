@@ -29,8 +29,10 @@ public class Main extends AppCompatActivity {
 
     Activity activity = (Activity) this;
     private String[] questoes = {
-            "como está", "o meu último chamado", "alterar", "senha", "minha senha"
+            "como está", "o meu último chamado", "alterar", "senha", "minha senha","olá","ola","oi"
+            ,"alô","alo","obrigado","obrigada","jennifer?","como vai?","como você", "alterar senha"
     };
+    private boolean pulaQuestao = false;
     private boolean validaSenha = false;
     private String primeiraSenha = null;
     private String segundaSenha = null;
@@ -39,13 +41,13 @@ public class Main extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FireBaseJennifer fireBaseJennifer = new FireBaseJennifer();
-        try {
-            fireBaseJennifer.connect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        fireBaseJennifer.gravar();
+//        FireBaseJennifer fireBaseJennifer = new FireBaseJennifer();
+//        try {
+//            fireBaseJennifer.connect();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        fireBaseJennifer.gravar();
 
         Button button = (Button) findViewById(R.id.sendMessage);
         addChild(getSaudacao() + " Sr. Antonio", false, true);
@@ -53,6 +55,7 @@ public class Main extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                pulaQuestao = true;
                 EditText edit = (EditText) findViewById(R.id.caixaTexto);
                 String result = edit.getText().toString();
                 edit.setText("");
@@ -61,25 +64,25 @@ public class Main extends AppCompatActivity {
 
                 // *************************** Parte IAAGO
 
-                if(     result.toLowerCase().contains("olá")||
-                        result.toLowerCase().contains("ola")||
-                        result.toLowerCase().contains("oi")||
-                        result.toLowerCase().contains("alô")||
-                        result.toLowerCase().contains("alo")){
+                if (result.toLowerCase().contains(questoes[5]) ||
+                        result.toLowerCase().contains(questoes[6]) ||
+                        result.toLowerCase().contains(questoes[7]) ||
+                        result.toLowerCase().contains(questoes[8]) ||
+                        result.toLowerCase().contains(questoes[9])) {
                     addChild("Olá Sr. Antônio, como posso ajudá-lo", false, false);
                 }
 
-                if(     result.toLowerCase().contains("obrigado")||
-                        result.toLowerCase().contains("obrigada")){
+                if (result.toLowerCase().contains(questoes[10]) ||
+                        result.toLowerCase().contains(questoes[11])) {
                     addChild("De nada. É sempre um prazer poder te ajudar.", false, false);
                 }
 
-                if(result.toLowerCase().contains("jennifer?")){
+                if (result.toLowerCase().contains(questoes[12])) {
                     addChild("antônio?", false, false);
                 }
 
-                if(     result.toLowerCase().contains("como vai?")||
-                        result.toLowerCase().contains("como você")) {
+                if (result.toLowerCase().contains(questoes[13]) ||
+                        result.toLowerCase().contains(questoes[14])) {
                     addChild("Estou sempre muito ocupada, atendendo vários clientes ao mesmo tempo.", false, false);
                     addChild("Mas estou muito feliz em ser sua assistente.", false, false);
                 }
@@ -93,41 +96,44 @@ public class Main extends AppCompatActivity {
                         primeiraSenha = null;
                         segundaSenha = null;
                         validaSenha = false;
-
+                        pulaQuestao = false;
                     } else {
                         addChild("Ops! Senha difere da primeira. Tente novamente", false, false);
                         primeiraSenha = null;
                         segundaSenha = null;
                         validaSenha = false;
                         result = "alterar senha";
+                        pulaQuestao = false;
                     }
                 }
                 if (validaSenha == true) {
                     primeiraSenha = result;
                     addChild("Confirme a sua senha", false, false);
+                    pulaQuestao = false;
                 }
-                if (result.contains(questoes[2]) && result.contains(questoes[3]) || result.contains(questoes[4])) {
+                if ((result.contains(questoes[2]) && result.contains(questoes[3]) || result.contains(questoes[4]) || result.contains(questoes[15]))) {
 
                     addChild("Certo. Qual será a nova senha? ", false, false);
+                    pulaQuestao = false;
                     validaSenha = true;
                 }
 
                 //Abertura de chamado
-                if (result.contains(questoes[0]) || result.contains(questoes[1])) {
+                if ((result.contains(questoes[0]) || result.contains(questoes[1]))) {
                     addChild("Vou verificar para você em 1 minuto!", false, false);
                     timerTask("Ainda está em triagem!" + "\n" + "Pode deixar que te aviso quando o status mudar ;)");
-
-
+                    pulaQuestao = false;
                     timerNotification();
                 }
 
-                List<String> list = Arrays.asList(questoes);
+                if (pulaQuestao){
+                    List<String> list = Arrays.asList(questoes);
 
-                if(!list.contains(result)){
-                    addChild("Desculpe não fui programada para fazer " + result + ". Por favor, escolha uma das opções:", false, false);
-                    addChild("1- "+questoes[0] +" "+questoes[1]+"\n2-"+questoes[2]+" "+questoes[3]+" "+questoes[4],false,false);
+                    if (!list.contains(result.toLowerCase())) {
+                        addChild("Desculpe não fui programada para fazer " + result + ". Por favor, escolha uma das opções:", false, false);
+                        addChild("Você pode tentar: " + questoes[0] + " " + questoes[1] + "\n" + "ou :" + questoes[2] + " " + questoes[3] + " " + questoes[4], false, false);
+                    }
                 }
-
             }
         });
     }
