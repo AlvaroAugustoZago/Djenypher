@@ -153,12 +153,12 @@ android:scrollbarAlwaysDrawVerticalTrack="true"
 
 <ImageButton
     android:id="@+id/user_profile_photo"
-    android:layout_width="100dp"
-    android:layout_height="100dp"
+    android:layout_width="130dp"
+    android:layout_height="130dp"
     android:layout_below="@+id/login_title"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="16dp"
-    android:background="@drawable/user_profile_image_background"
+    android:background="@drawable/neogrid_menor"
     android:elevation="4dp"
     android:src="@drawable/profile_icon" />
 </RelativeLayout>
