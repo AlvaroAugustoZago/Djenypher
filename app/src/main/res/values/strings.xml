@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">ChatFAQ</string>
     <string name="olaTelaInicial">Olá, meu nome é Jenifer!</string>
+    <string name="title_activity_slider">SliderActivity</string>
+
+    <string name="home">Home</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="start">Start</string>
 </resources>
